@@ -28,7 +28,7 @@ public class Main {
               String loanType = sc.next().toLowerCase();
 
               /* Get Interest for loan type  */
-              float interest = getInterest(loanType, loan);
+              float interest = loan.getInterest(loanType);
 
               if(interest==-1.0f)
               {
@@ -46,11 +46,29 @@ public class Main {
               /*  Calculate EMI  */
               int emi = loan.calculateEMI(principalAmount, interest, tenure);
 
+              if(emi == -1)
+              {
+                  System.out.println("Some of the values you've entered is incorrect!!!");
+                  System.exit(0);
+              }
+
               /* Get Total Payment */
-              int totalPay = loan.getTotalPayment(principalAmount, emi, tenure);
+              int totalPay = loan.getTotalPayment(emi, tenure);
+
+              if(totalPay == -1)
+              {
+                  System.out.println("Some of the values you've entered is incorrect!!!");
+                  System.exit(0);
+              }
 
               /*  Get total Interest Payable */
               int interestPayable = loan.getTotalInterestPayable(principalAmount, totalPay);
+
+              if(interestPayable == -1)
+              {
+                  System.out.println("Some of the values you've entered is incorrect!!!");
+                  System.exit(0);
+              }
 
               System.out.println("The EMI for your Principal and tenure is:");
               System.out.println(formatter.format(new BigDecimal(emi)));
@@ -64,7 +82,7 @@ public class Main {
           } else if (userOrAdmin.equals("admin")) {
 
               System.out.println("Hi! Admin");
-              System.out.println("Do You want to change interest type:");
+              System.out.println("Do You want to change interest type:Enter (yes/no):->");
               String yesOrNo = sc.next().toLowerCase();
 
               if (yesOrNo.equals("yes")) {
@@ -74,7 +92,7 @@ public class Main {
                   String loanType = sc.next().toLowerCase();
 
                   /* Get Interest for loan type  */
-                  float presentInterest = getInterest(loanType, loan);
+                  float presentInterest = loan.getInterest(loanType);
 
                   if(presentInterest==-1.0f)
                   {
@@ -86,23 +104,28 @@ public class Main {
                           " \nTo What would you like to change it to!!");
                   float interest = sc.nextFloat();
 
-                  int flag = setUpdatedInterest(interest, loanType, loan);
-                  System.out.println("Your Interest rates have been updated!!");
+                  int flag = loan.setUpdatedInterest(interest, loanType);
+
 
                   if(flag == 1)
                   {
                       System.exit(0);
                   }
+                  System.out.println("Your Interest rates have been updated!!");
 
-                  float updatedInterest = getInterest(loanType, loan);
+                  float updatedInterest = loan.getInterest(loanType);
                   System.out.println("Updated Interest is " + updatedInterest+"\n");
 
-              } else {
+              } else if(yesOrNo.equals("no")){
                   System.out.println("These are the Interest rates of loans");
                   System.out.println("Home Loan Interest :->" + loan.getHomeLoanInterest() + "\n");
                   System.out.println("Car Loan Interest :->" + loan.getCarLoanInterest() + "\n");
                   System.out.println("Personal Loan Interest :->" + loan.getPersonalLoanInterest() + "\n");
                   System.out.println("Thank You then!\n");
+              }
+              else
+              {
+                  System.out.println("You have chosed an incorrect option!!!");
               }
 
           }
@@ -122,56 +145,4 @@ public class Main {
       System.out.println("You are logged Out!!!");
 
     }
-
-    public static float getInterest(String loanType, Loan loan){
-
-        float interest = 0.0f;
-
-        switch (loanType)
-        {
-            case "home":
-                interest = loan.getHomeLoanInterest();
-                break;
-            case "car":
-                interest = loan.getCarLoanInterest();
-                break;
-            case "personal":
-                interest = loan.getPersonalLoanInterest();
-                break;
-            default:
-                System.out.println("The loan type you preferred is not here!!!\n");
-               // System.exit(0);
-                interest = -1.0f;
-        }
-        return interest;
-    }
-
-    public static int setUpdatedInterest(float interest,String loanType,Loan loan){
-
-        int flag = 0;
-
-        switch (loanType)
-        {
-            case "home":
-                loan.setHomeLoanInterest(interest);
-                break;
-            case "car":
-                loan.setCarLoanInterest(interest);
-                break;
-            case "personal":
-                loan.setPersonalLoanInterest(interest);
-                break;
-            default:
-                System.out.println("The loan type you preferred is not here!!!\n");
-               //System.exit(0);
-                flag = 1;
-        }
-
-        if(flag == 1)
-            return  1;
-        else
-
-            return 0;
-    }
-
 }

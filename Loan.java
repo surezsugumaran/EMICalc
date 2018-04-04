@@ -36,6 +36,11 @@ public class Loan {
 
     public static int calculateEMI(int principalAmount, float interest, int tenure){
 
+        if(principalAmount == 0 || interest==0.0f || tenure==0)
+        {
+         return -1;
+        }
+
         int emi;
         float rate = interest/12/100;
        // emi = (int) ((int) principalAmount * rate * ((Math.pow((1+rate),tenure))/(Math.pow((1+rate),tenure))-1));
@@ -49,7 +54,12 @@ public class Loan {
 
         return emi;
     }
-    public static int getTotalPayment(int principalAmount, int emi, int tenure){
+    public static int getTotalPayment(int emi, int tenure){
+
+        if(emi == 0|| tenure == 0)
+        {
+            return -1;
+        }
 
         int totalPay=0;
 
@@ -58,10 +68,67 @@ public class Loan {
     }
 
     public static int getTotalInterestPayable(int principalAmount, int totalPay){
+
+        if(principalAmount == 0|| totalPay == 0)
+        {
+            return -1;
+        }
+
         int interestPayable = 0;
 
         interestPayable = totalPay - principalAmount;
 
         return interestPayable;
+    }
+
+    public float getInterest(String loanType){
+
+        float interest = 0.0f;
+
+        switch (loanType)
+        {
+            case "home":
+                interest = getHomeLoanInterest();
+                break;
+            case "car":
+                interest = getCarLoanInterest();
+                break;
+            case "personal":
+                interest = getPersonalLoanInterest();
+                break;
+            default:
+                System.out.println("The loan type you preferred is not here!!!\n");
+                // System.exit(0);
+                interest = -1.0f;
+        }
+        return interest;
+    }
+
+    public int setUpdatedInterest(float interest, String loanType){
+
+        int flag = 0;
+
+        switch (loanType)
+        {
+            case "home":
+                setHomeLoanInterest(interest);
+                break;
+            case "car":
+                setCarLoanInterest(interest);
+                break;
+            case "personal":
+                setPersonalLoanInterest(interest);
+                break;
+            default:
+                System.out.println("The loan type you preferred is not here!!!\n");
+                //System.exit(0);
+                flag = 1;
+        }
+
+        if(flag == 1)
+            return  1;
+        else
+
+            return 0;
     }
 }
