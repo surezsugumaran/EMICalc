@@ -21,3 +21,12 @@ Loan.java
 when we try to add mode loan types. In the current model we need to add more methods.
 48. variable names!!
 45. You can add commnets explaining the logic.
+107. `setInterest` or `updateInterest` is appropriate. The current one is misleading
+
+EMITest.java
+
+`@org.junit.jupiter.api` imports can be grouped at the top.
+22. variable names, naming conventions..
+
+`getTotalPayment` and `calculateEMI`. Add comments explaining the various scenarioes. or move that to individual methods, The 
+method name explaining the scenario.
