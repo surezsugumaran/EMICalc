@@ -1,0 +1,23 @@
+1. It is always good to have a proper directory structure for any projects.
+2. Readme file can be used efficiently, by adding things like type of the project, How to run it, etc.. . Please go through some
+readme files of open source projects.
+
+Main.Java:
+line:
+18. use proper intentation.
+27. Rather than using The types of loan as strings. It is good to use datatypes such as enum. So that any other modules uses the
+loan types can reuse that. Minimizing manual errors.
+39. Are we not allowing float values?
+33, 49, 97. Any reason for using a fixed value.(-1.0f, -1). Use connments when we deviate from the normal standard behaviour. 
+stating the reson for that deviation.
+86. Use proper names for variables.(yesOrNo)
+105. Better to get all input as String and parse that acrroring to your need in your application.
+47. Interest is the property of the Loan class itself. So, it  is not necessary to pass the interest to calculate
+the emi. Let the calculateEMI() method receives the loan type and determines the interest rate by itself.
+
+Loan.java
+
+13.All the 6 getters and setters can be consolidated to 2. getting loan type as arguments. As this model will not scale
+when we try to add mode loan types. In the current model we need to add more methods.
+48. variable names!!
+45. You can add commnets explaining the logic.
